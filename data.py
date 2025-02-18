@@ -97,8 +97,8 @@ class BDDObjectDetectionDataset(Dataset):
 
 
 if __name__ == '__main__':
-    data_root = ''
-    dataset = BDDObjectDetectionDataset(data_root, split='train')
+    from config import DATA_ROOT
+    dataset = BDDObjectDetectionDataset(DATA_ROOT, split='train')
     image, target = dataset[0]
     print(f"Image shape: {image.size}")
     print(f"Target keys: {target.keys()}")

@@ -1,0 +1,1 @@
+DATA_ROOT = '/Users/ashutoshtaklikar/Desktop/Bosch_Interview/assignment_data_bdd'
