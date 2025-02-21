@@ -1,9 +1,12 @@
 from collections import defaultdict
 import json
 import os
+import torch
 from PIL import Image
 import pandas as pd
-from torch.utils.data import Dataset  # Assuming PyTorch, for now
+import numpy as np
+
+from torch.utils.data import Dataset
 from tqdm import tqdm
 from loguru import logger as LOGGER
 
@@ -95,6 +98,28 @@ class BDDObjectDetectionDataset(Dataset):
 
         return image, target
 
+
+def custom_collate_fn(batch):
+    images = []
+    targets = []
+    
+    for image, target in batch:
+        # Convert PIL Image to tensor
+        image = torch.tensor(np.array(image)).permute(2, 0, 1).float() / 255.0
+        images.append(image)
+        
+        # Convert boxes to tensor
+        boxes = torch.tensor(np.array(target['boxes']), dtype=torch.float32)
+        
+        # Convert labels to tensor
+        labels = torch.tensor(np.array(target['labels']), dtype=torch.int64)
+        
+        targets.append({
+            'boxes': boxes,
+            'labels': labels
+        })
+    
+    return images, targets
 
 if __name__ == '__main__':
     from config import DATA_ROOT
