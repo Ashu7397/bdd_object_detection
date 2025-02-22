@@ -176,3 +176,4 @@ cython_debug/
 *.json
 *.png
 lightning_logs/*
+assignment_data_bdd/*
